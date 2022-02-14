@@ -2,6 +2,7 @@ const uri = "http://localhost:8080/api/worklogs/";
 const usersTasksuri = "http://localhost:8080/api/alltasks/";
 var updateid = 0 ;
 var AllWorklogs ;
+var allLogs=[];
 // = JSON.parse(localStorage.getItem("workLogList") || "[]");
 let loginuser = sessionStorage.getItem("loginuser");
 let allTasks;
@@ -53,7 +54,11 @@ function teamfun() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      _displayItems(JSON.parse(xhttp.responseText).filter(person => person.empname === loginuser));
+      
+      allLogs=(JSON.parse(xhttp.responseText).filter(person => person.empname === loginuser));
+      let mylogs=allLogs.map(o => ({duration: "", ...o}))
+      // _displayItems(JSON.parse(xhttp.responseText).filter(person => person.empname === loginuser));
+      _displayItems(mylogs);
       console.log(JSON.parse(xhttp.responseText));
     }
   };
@@ -62,6 +67,7 @@ function teamfun() {
 }
 
 function _displayItems(data) {
+  console.log(data);
   $("#profileForm #taskDropdown").length = 0;
   const tBody = document.getElementById("teambox");
   tBody.innerHTML = "";
@@ -91,9 +97,14 @@ function _displayItems(data) {
     let assignedate = document.createTextNode(item.etime);
     td5.appendChild(assignedate);
     let td6 = tr.insertCell(5);
-    let duedate = document.createTextNode(item.status);
-    td6.appendChild(duedate);
+    var cDate=new Date().toISOString().slice(0, 10);
+    var rDate =new Date(item.date).toISOString().slice(0, 10);
+    let status = document.createTextNode(parseInt(item.etime)-parseInt(item.stime));
+    td6.appendChild(status);
     let td7 = tr.insertCell(6);
+    let duedate = document.createTextNode(item.status);
+    td7.appendChild(duedate);
+    let td8 = tr.insertCell(7);
     a.setAttribute("href", "#editTaskModal");
     a.setAttribute("class", "edit");
     a.setAttribute("data-toggle", "modal");
@@ -102,9 +113,9 @@ function _displayItems(data) {
     // a.setAttribute('data-toggle', 'tooltip');
     a.setAttribute("title", "Edit");
     a.innerHTML = "&#xE254;";
-    td7.appendChild(a);
+    td8.appendChild(a);
 
-    let td8 = tr.insertCell(7);
+    let td9 = tr.insertCell(8);
     // td8.appendChild(deleteButton);
     aa.setAttribute("href", "#deleteTaskModal");
     aa.setAttribute("class", "delete");
@@ -114,7 +125,7 @@ function _displayItems(data) {
     // aa.setAttribute("data-toggle", "tooltip");
     aa.setAttribute("title", "Delete");
     aa.innerHTML = "&#xE872;";
-    td8.appendChild(aa);
+    td9.appendChild(aa);
   });
   teamtask = data;
   // $("#profileForm").find('[id="name"]').val(loginuser);
