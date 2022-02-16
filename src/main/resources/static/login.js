@@ -41,12 +41,12 @@ function getCurrentUser(curuser) {
   console.log(curuser);
 
   console.log(curuser[0].role);
-  if (curuser[0].role == "U") {
+  if (curuser[0].role == "User") {
     console.log("Object is empty");
     sessionStorage.setItem("loginuser", curuser[0].name);
     window.location.href = "userhome.html";
   }
-  if (curuser[0].role == "A") {
+  if (curuser[0].role == "Admin") {
     console.log("Object is not empty");
     sessionStorage.setItem("loginuser", curuser[0].name);
     window.location.href = "adminhome.html";
