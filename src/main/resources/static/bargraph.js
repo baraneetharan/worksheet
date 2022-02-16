@@ -1,5 +1,6 @@
 const uri = "http://localhost:8080/api/alltasks/";
 var allTasks=[];
+var colors=[];
 
 function getData() {
   var xhttp = new XMLHttpRequest();

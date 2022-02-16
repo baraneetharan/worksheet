@@ -1,6 +1,8 @@
 package com.kgisl.ws.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.kgisl.ws.entity.AllTask;
 import com.kgisl.ws.service.AllTaskService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,8 +34,22 @@ public class AllTaskController {
     @Autowired
     public AllTaskService allTaskService;
 
+    @RequestMapping(value="/animals", method=RequestMethod.GET)
+@ResponseBody
+public Map<String, Map<String, Long>> showAllAnimals() {
+    Map<String, Map<String, Long>> x = allTaskService.getAllTasks().stream()
+    .collect(Collectors.groupingBy(AllTask::getAssigneto,
+        Collectors.groupingBy(AllTask::getStatus,Collectors.counting())));
+
+        // x.forEach(System.out::println);
+
+        x.forEach((K,V) -> System.out.println(K + " : " + V));
+        // new JSONObject(x);
+    return x;
+}
+
     @GetMapping("/")
-    public @ResponseBody ResponseEntity<List<AllTask>> getAll() {
+    public @ResponseBody ResponseEntity<List<AllTask>> getAll() {        
         return new ResponseEntity<>(allTaskService.getAllTasks(), HttpStatus.OK);
     }
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

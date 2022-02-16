@@ -1,14 +1,16 @@
-var allusers = JSON.parse(localStorage.getItem("usersList") || "[]");
-var updateindex ;
-var text="";
+const uri = "http://localhost:8080/api/users/";
+
+var allusers;
+// = JSON.parse(localStorage.getItem("usersList") || "[]");
+var updateindex = 0;
+var text = "";
 $(document).ready(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 function setallusers() {
   if (localStorage) {
     localStorage.setItem("usersList", JSON.stringify(allusers));
-  } 
-  else {
+  } else {
     alert("Sorry, your browser do not support local storage.");
   }
 }
@@ -18,14 +20,28 @@ function logout() {
   location.href = "login.html";
 }
 function teamfun() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      allusers = JSON.parse(xhttp.responseText);
+      _displayItems();
+    }
+  };
+  xhttp.open("GET", uri, true);
+  xhttp.send();
+}
+
+function _displayItems() {
   var html = "";
   for (var i = 0; i < allusers.length; i++) {
-    var currEdit = "edit(" + i + ")";
-    var currDelete = "del(" + i + ")"; 
+    var currEdit = "edit(" + allusers[i].id + ")";
+    var currDelete = "del(" + allusers[i].id + ")";
     html += "<tr>";
     html +=
       "<td>" +
-      allusers[i].username +
+      allusers[i].id +
+      "<td>" +
+      allusers[i].name +
       "<td>" +
       allusers[i].password +
       "<td>" +
@@ -34,8 +50,7 @@ function teamfun() {
       "<td><a href='#editTaskModal' class='edit' data-toggle='modal'  onclick=" +
       currEdit +
       ">";
-    html +=
-      "<i    class='material-icons' title='Edit'>&#xE254;</i  ></a>";
+    html += "<i    class='material-icons' title='Edit'>&#xE254;</i  ></a>";
     html +=
       "<a  href='#deleteTaskModal' class='delete'  data-toggle='modal'  onclick=" +
       currDelete +
@@ -45,7 +60,7 @@ function teamfun() {
     html += "</tr>";
   }
   document.getElementById("teambox").innerHTML = html;
- addOptions();
+  // addOptions();
 }
 
 function addOptions() {
@@ -65,11 +80,18 @@ function addOptions() {
 
 function save() {
   var newallusers = {
-    username: document.getElementById("username").value,
+    id: 0,
+    name: document.getElementById("username").value,
     password: document.getElementById("Password").value,
     role: document.getElementById("userDropdown").value,
   };
   allusers.push(newallusers);
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", uri, true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(JSON.stringify(newallusers));
+
   setallusers();
   teamfun();
 }
@@ -82,28 +104,63 @@ function del(i) {
 }
 
 function edit(i) {
-// alert("EDITING"+" "+i);
-$("#profileForm").find('[id="username"]').val(allusers[i].username);
-$("#profileForm").find('[id="Password"]').val(allusers[i].password);
-$("#profileForm").find('[id="userDropdown"]').val(allusers[i].role);
-updateindex=i;
+  // alert("EDITING"+" "+i);
+  // $("#profileForm #userDropdown").length = 0;
+  // $("#profileForm #userDropdown").empty();
+  var selectElem = document.getElementById("userDropdown");
+
+  const item = allusers.find((item) => item.id === i);
+  $("#profileForm").find('[id="username"]').val(item.name);
+  $("#profileForm").find('[id="Password"]').val(item.password);
+  $("#profileForm").find('[id="userDropdown"]').val(item.role);
+
+  updateindex = i;
+  
+
+  console.log(item);
+  $.each(userDropdown, function (index, value) {
+    $("<option/>", {
+      value: index,
+      text: userDropdown[index].name,
+    }).appendTo(selectElem);
+
+    // if (allusers[index].role === item.role.slice(0,1) ){
+    //   console.log(allusers[index].role + " = " + item.role);
+    //   $("#userDropdown option")
+    //     // .val(allusers[index].role.slice(0,1))
+    //     .text(allusers[index].role)
+    //     .prop({ selected: true });
+    // }
+
+    $("<option/>", {
+      value: index,
+      text: userDropdown[index].name,
+    }).appendTo(selectElem);
+
+    // if(item.role==="A"){
+    if (allusers[index].role === item.role) {
+      console.log(allusers[index].role + " = " + item.role);
+      $("#userDropdown option").val(allusers[index].role).prop({ selected: true });
+    } else {
+      $("#userDropdown option").val(allusers[index].role).prop({ selected: true });
+    }
+  });
 }
 
 function update() {
   console.log("update " + updateindex);
- //e1 = document.getElementById("username");
- allusers[updateindex].username = $("#profileForm")
+  //e1 = document.getElementById("username");
+  allusers[updateindex].username = $("#profileForm")
     .find('[id="username"]')
     .val();
- allusers[updateindex].password = $("#profileForm")
+  allusers[updateindex].password = $("#profileForm")
     .find('[id="Password"]')
     .val();
   allusers[updateindex].role = $(
     "#profileForm #userDropdown option:selected"
-  ).text();
+  ).val();
   document.getElementById("username").value = "";
   document.getElementById("Password").value = "";
   document.getElementById("userDropdown").value = "";
- setallusers();
- 
+  setallusers();
 }
