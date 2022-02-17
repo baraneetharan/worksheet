@@ -22,6 +22,15 @@ function logout() {
   location.href = "login.html";
 }
 function teamfun() {
+  //   $('#addTaskModal').on('hidden.bs.modal', function () {
+  //     $(this).find("input,textarea,select").val('').end();
+
+  // });
+
+  $("#addTaskModal").on("hidden.bs.modal", function () {
+    $(this).removeData("bs.modal");
+  });
+
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
@@ -34,8 +43,8 @@ function teamfun() {
 }
 
 function _displayItems() {
-  removeid=0;
-  updateid=0;
+  removeid = 0;
+  updateid = 0;
   $("#profileForm #userDropdown").length = 0;
   const tBody = document.getElementById("teambox");
   tBody.innerHTML = "";
@@ -52,16 +61,18 @@ function _displayItems() {
     let td1 = tr.insertCell(0);
     let custid = document.createTextNode(item.id);
     td1.appendChild(custid);
+    td1.setAttribute("style", "visibility:hidden;");
     let td2 = tr.insertCell(1);
     let taskname = document.createTextNode(item.name);
     td2.appendChild(taskname);
     let td3 = tr.insertCell(2);
     let description = document.createTextNode(item.password);
     td3.appendChild(description);
+    td3.setAttribute("style", "visibility:hidden;");
     let td4 = tr.insertCell(3);
     let assigneto = document.createTextNode(item.role);
     td4.appendChild(assigneto);
-    
+
     let td5 = tr.insertCell(4);
     a.setAttribute("href", "#editTaskModal");
     a.setAttribute("class", "edit");
@@ -78,7 +89,7 @@ function _displayItems() {
     aa.setAttribute("href", "#deleteTaskModal");
     aa.setAttribute("class", "delete");
     aa.setAttribute("data-toggle", "modal");
-    aa.setAttribute('onclick', currDelete);
+    aa.setAttribute("onclick", currDelete);
     aa.setAttribute("class", "material-icons");
     // aa.setAttribute("data-toggle", "tooltip");
     aa.setAttribute("title", "Delete");
@@ -104,12 +115,40 @@ function addOptions() {
   console.log(addOptions);
 }
 
+function pwdMatching() {
+  var password = document.getElementById("Password"),
+    confirm_password = document.getElementById("CPassword");
+
+  if (password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+    return;
+  }
+  if ((password.value = confirm_password.value)) {
+    confirm_password.setCustomValidity("");
+    save();
+  }
+}
+function editpwdMatching() {
+  var password = document.getElementById("editPassword"),
+    confirm_password = document.getElementById("editCPassword");
+
+  if (password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+    return;
+  }
+  if ((password.value = confirm_password.value)) {
+    confirm_password.setCustomValidity("");
+    update();
+  }
+}
 function save() {
   var newallusers = {
     id: 0,
     name: document.getElementById("username").value,
     password: document.getElementById("Password").value,
     role: document.getElementById("userDropdown").value,
+    userid: document.getElementById("userid").value,
+    email: document.getElementById("email").value,
   };
   allusers.push(newallusers);
 
@@ -124,7 +163,7 @@ function save() {
 
 function del(i) {
   // alert("deleting...." + " " + i);
-  removeid=i;
+  removeid = i;
   // allusers.splice(i, 1);
   // var xhttp = new XMLHttpRequest();
   // xhttp.open("DELETE", uri + i, true);
@@ -145,7 +184,7 @@ function remove() {
 }
 
 function edit(i) {
-  alert("EDITING" + " " + i);
+  // alert("EDITING" + " " + i);
   // $("#profileForm #userDropdown").length = 0;
   // $("#profileForm #userDropdown").empty();
   // var selectElem = document.getElementById("userDropdown");
@@ -154,8 +193,10 @@ function edit(i) {
 
   const item = allusers.find((item) => item.id === i);
   $("#profileForm").find('[id="username"]').val(item.name);
-  $("#profileForm").find('[id="Password"]').val(item.password);
+  $("#profileForm").find('[id="editPassword"]').val(item.password);
   $("#profileForm").find('[id="userDropdown"]').val(item.role);
+  $("#profileForm").find('[id="userid"]').val(item.userid);
+  $("#profileForm").find('[id="email"]').val(item.email);
   // $("#profileForm #userDropdown option:selected").text(),
 
   updateid = item.id;
@@ -183,8 +224,10 @@ function update() {
   var newallusers = {
     id: updateid,
     name: $("#profileForm").find('[id="username"]').val(),
-    password: $("#profileForm").find('[id="Password"]').val(),
+    password: $("#profileForm").find('[id="editPassword"]').val(),
     role: $("#profileForm #userDropdown option:selected").val(),
+    userid: $("#profileForm").find('[id="userid"]').val(),
+    email: $("#profileForm").find('[id="email"]').val(),
   };
 
   console.log(newallusers);
@@ -199,3 +242,5 @@ function update() {
 }
 
 teamfun();
+// password.onchange = pwdMatching;
+// confirm_password.onkeyup = pwdMatching;

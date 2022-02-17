@@ -391,9 +391,9 @@ right: 0; */
 }
 .hmenu-wrap .hmenu>div {
     background: var(--overlay-color);
-    border-radius: 50%;
-    width: 200vw;
-    height: 200vw;
+    border-radius: 0%;
+    width: 20vw;
+    height: 50vw;
     display: flex;
     flex: none;
     align-items: center;
