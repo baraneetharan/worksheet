@@ -168,6 +168,12 @@ function myFunction(curDiv) {
     document.getElementById("taskSummary").style.display = "block";
     document.getElementById("statusTable").style.display = "block";
   }
+ 
+  async function load_home(url) {
+    //   alert(e);
+    // let url = "manageuser.html";
+    content.innerHTML = await (await fetch(url)).text();
+  }
   
   Atest();
 }

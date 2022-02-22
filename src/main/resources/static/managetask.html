@@ -12,13 +12,36 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <link rel="stylesheet" href="general.css">
-<link rel="stylesheet" href="index.css" />
+<link rel="stylesheet" href="hmenu.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="managetask.js"></script>
 </head>
-<body>
+<body onload="teamfun()">
 <div class="container">
+  <!-- Note: stick navigation inside body tag, not header -->
+    <!-- Note: navigation comes first in code, because it's "behind" everything -->
+    <ul class="navigation">
+      <li class="nav-item">
+        <a href="#" onclick="load_home('manageuser.html')">Manage Users</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" onclick="load_home('managetask.html')">Manage Task</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" onclick="load_home('userhome.html')">Manage Logs</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" onclick="load_home('bargraph.html')">Reports</a>
+      </li>
+      <li class="nav-item"><a href="index.html">Log out</a></li>
+    </ul>
+
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger"><span class="hidden_nav"></span></label>
+
+    <!-- Note: the rest of the site needs to be wrapped in unique div (like site-wrap) so that it can slide to the side in it's entirety -->
+    <div id="content" class="site-wrap"></div>
   <div class="table-responsive">
     <div class="table-wrapper">
       <div class="table-title"> 

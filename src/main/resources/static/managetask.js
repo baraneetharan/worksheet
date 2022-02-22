@@ -202,4 +202,10 @@ function del(id) {
 function htest() {
   $(".htoggler").prop("checked", false);
 }
-teamfun();
+async function load_home(url) {
+  //   alert(e);
+  // let url = "manageuser.html";
+  content.innerHTML = await (await fetch(url)).text();
+}
+
+// teamfun();

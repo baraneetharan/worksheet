@@ -49,6 +49,6 @@ function getCurrentUser(curuser) {
   if (curuser[0].role == "Admin") {
     console.log("Object is not empty");
     sessionStorage.setItem("loginuser", curuser[0].name);
-    window.location.href = "adminhome.html";
+    window.location.href = "user.html";
   }
 }
