@@ -7,25 +7,11 @@ Simply enter you log details what you worked on, choose start and/or duration, a
 
 Time entries are more useful once you categorize them.
 ## Application Flow Diagram:
+
 Work Sheet application main menu's and it's functionalities.
-```mermaid
-graph TD
-    A[Start] --> B(User Login Page)
-    B --> C{Authentication}
-    C -->|Invalid User| D[Show User Login Page]
-    D --> B(User Login Page)
-    C -->|Valid User| E[Check Role]
-    E -->|Admin| F[Show Admin Options]
-    F -->|User Menu| G[Manage Users ]
-    F -->|Task Menu| H[Manage Tasks ]
-    F -->|Reports| I[Show Charts ]
-    F -->|Log Out| J(User Login Page)
-    J --> B(User Login Page)
-    E -->|User| Z[Show User Options]	  
-    Z-->|Add Log| X[New Log]
-    Z -->Y[Log Out]
-    J(User Login Page)    
-```
+
+![Application flow](https://github.com/baraneetharan/worksheet/blob/main/wsreadme.JPG?raw=true)
+
 ## UML Diagram
 
 ## Database Structure
