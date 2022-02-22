@@ -1,7 +1,13 @@
 # Employee Work Sheet Application
+WorkSheet revolves around your log time entries.
 
+You track time you spend working on things and then analyze it in reports.
+
+Simply enter you log details what you worked on, choose start and/or duration, and add the time entry.
+
+Time entries are more useful once you categorize them.
 ## Application Flow Diagram:
-
+Work Sheet application main menu's and it's functionalities.
 ```mermaid
 graph TD
     A[Start] --> B(User Login Page)
@@ -68,6 +74,15 @@ CREATE TABLE `work_log` (
 ![Log](https://github.com/baraneetharan/worksheet/blob/main/managelog.JPG?raw=true)
 
 ## Test Plan
+### Test Scenarios – Login Page
+
+| SL.No.      | Test Case Description   |
+| ------      | ---------------------   |
+|1      	  | Verify the messages for each mandatory field.   |
+|2      	  | Verify if the user cannot proceed without filling all the mandatory fields.   |
+|3      	  | Verify if the numbers and special characters are allowed.   |
+|4      	  | Verify if a user can log in with the valid details.   |
+|5      	  | Verify if the Password and Confirm Password fields are accepting similar strings only.   |
 
 ### Test Cases – Login Page
 
@@ -77,25 +92,7 @@ Functional Test Cases:
 | 1.      | Verify if a user will be able to login with a valid username and valid password.       | Positive   |
 | 2.      | Verify if a user cannot login with a valid username and an invalid password.           | Negative   |
 | 3.      | Verify the login page for both, when the field is blank and Submit button is clicked   | Positive   |
-| 4.      | Verify the ‘Forgot Password’ functionality.                                            | Positive   |
-| 5.      | Verify the messages for invalid login.                                                 | Positive   |
-| 6.      | Verify the ‘Remember Me’ functionality                                                 | Positive   |
-| 7.      | Verify if the data in password field is either visible as asterisk or bullet signs.    | Positive   |
-| 8.      | Verify if a user is able to login with a new password only after he/she has changed the password.   | Positive   |
-| 9.      | Verify if the login page allows to log in simultaneously with different credentials in a different browser.| Positive   |
-| 10.     | Verify if the ‘Enter’ key of the keyboard is working correctly on the login page.      | Positive   |
-
-## login screen
-### Sr. No.	Test Scenarios
-| SL.No.      | Test Case Description   |
-| ------      | ---------------------   |
-|1      	  | Verify the messages for each mandatory field.   |
-|2      	  | Verify if the user cannot proceed without filling all the mandatory fields.   |
-|3      	  | Verify the age of the user when the DOB is selected.   |
-|4      	  | Verify if the numbers and special characters are not allowed in the First and Last name.   |
-|5      	  | Verify if a user can sign-up successfully with all the mandatory details.   |
-|6      	  | Verify if a user can log in with the valid details.   |
-|7      	  | Verify if the Password and Confirm Password fields are accepting similar strings only.   |
-|8      	  | Verify if the Password field will prompt you for the weak passwords.   |
-|9      	  | Verify if duplicate email address will not get assigned.   |
-|10      	  | Verify that hints are provided for each field on the form, for the ease of use.   |
+| 4.      | Verify the messages for invalid login.                                                 | Positive   |
+| 5.      | Verify if the data in password field is either visible as asterisk or bullet signs.    | Positive   |
+| 6.      | Verify if the login page allows to log in simultaneously.                              | Positive   |
+| 7.      | Verify if the ‘Enter’ key of the keyboard is working correctly on the login page.      | Positive   |
