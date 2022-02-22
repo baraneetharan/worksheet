@@ -73,6 +73,10 @@ CREATE TABLE `work_log` (
 
 ![Log](https://github.com/baraneetharan/worksheet/blob/main/managelog.JPG?raw=true)
 
+![Admin work flow](https://github.com/baraneetharan/worksheet/blob/main/worksheetAdminflow.png?raw=true)
+
+![User work flow](https://github.com/baraneetharan/worksheet/blob/main/worksheetUserflow.png?raw=true)
+
 ## Test Plan
 ### Test Scenarios – Login Page
 
