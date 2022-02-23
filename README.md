@@ -10,7 +10,9 @@ Time entries are more useful once you categorize them.
 
 Work Sheet application main menu's and it's functionalities.
 
-![Application flow](https://github.com/baraneetharan/worksheet/blob/main/wsreadme.JPG?raw=true)
+![Application flow](https://github.com/baraneetharan/worksheet/blob/main/wsflow1.JPG?raw=true)
+
+![Application flow](https://github.com/baraneetharan/worksheet/blob/main/wsflow1.JPG?raw=true)
 
 ## UML Diagram
 
